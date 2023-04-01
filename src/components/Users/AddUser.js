@@ -8,12 +8,22 @@ import classes from "./AddUser.module.css";
 
 const AddUser = (props) => {
   const [enteredUsername, setEnteredUsername] = useState("");
-  const [EnteredAge, setEnteredAge] = useState("");
+  const [enteredAge, setEnteredAge] = useState("");
 
   const addUserHandler = (event) => {
     event.preventDefault();
 
-    console.log(enteredUsername, EnteredAge);
+    if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0) {
+      return;
+    }
+
+    if (enteredAge < 1) {
+      return;
+    }
+
+    setEnteredUsername("");
+    setEnteredAge("");
+    console.log(enteredUsername, enteredAge);
   };
 
   const userChangeHandler = (event) => {
@@ -26,9 +36,19 @@ const AddUser = (props) => {
     <Card className={classes.input}>
       <form onSubmit={addUserHandler}>
         <label>Username</label>
-        <input id="username" type="text" onChange={userChangeHandler} />
+        <input
+          id="username"
+          type="text"
+          value={enteredUsername}
+          onChange={userChangeHandler}
+        />
         <label>Age (Years)</label>
-        <input id="age" type="number" onChange={ageChangeHandler} />
+        <input
+          id="age"
+          type="number"
+          value={enteredAge}
+          onChange={ageChangeHandler}
+        />
         <Button type="submit">Add User</Button>
       </form>
     </Card>
